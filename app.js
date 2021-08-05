@@ -1,15 +1,30 @@
+//template literals
+//const generatePage = (userName, githubName) => `Name: ${userName}, Github: ${githubName}`;
+
+//profile data args array- holds the user command line args
 const profileDataArgs = process.argv.slice(2, process.argv.length);
-console.log(profileDataArgs);
 
-//create a function to take in the input and display some output
-const printProfileData = profileDataArr => {
-    //this... 
-    for (let i = 0; i < profileDataArr.length; i += 1) {
-        console.log(profileDataArr[i]);
-    }
-    console.log('=============');
-
-    //is the same as this...
-    profileDataArr.forEach(profileItem => console.log(profileItem));
+//multi line strings
+const generatePage = (userName, githubName) => {
+    return `
+    Name: ${userName}
+    GitHub: ${githubName}
+    `;
 };
-printProfileData(profileDataArgs);
+
+//const name = profileDataArgs[0];
+//const github = profileDataArgs[1];
+const [name, github] = profileDataArgs;
+
+//logs name and github inputs and confirm they match
+console.log(name,github);
+console.log(generatePage(name, github));
+
+
+//console.log(generatePage('Kierra', 'knels11'));
+
+//code below returns undefined
+//es6 ft ~ assignment destructuring: assigns elements of an array to a variable in a single expression
+//const [name, github] = profileDataArgs;
+
+//console.log(generatePage(name,github));
