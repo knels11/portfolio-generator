@@ -4,27 +4,43 @@
 //profile data args array- holds the user command line args
 const profileDataArgs = process.argv.slice(2, process.argv.length);
 
-//multi line strings
-const generatePage = (userName, githubName) => {
+//html template literal/string
+const generatePage = (name, github) => {
     return `
-    Name: ${userName}
-    GitHub: ${githubName}
+    <!DOCTYPE HTML>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title> Portfolio Demo </title>
+    </head>
+    
+    <body>
+        <h1>${name}</h1>
+        <h2><a href="https://github.com/${github}">Github</a></h2>
+    </body>
+    </html>
     `;
 };
-
-//const name = profileDataArgs[0];
-//const github = profileDataArgs[1];
+//es6 ft ~ assignment destructuring: assigns elements of an array to a variable in a single expression
 const [name, github] = profileDataArgs;
 
 //logs name and github inputs and confirm they match
 console.log(name,github);
 console.log(generatePage(name, github));
 
+//multi line strings
+//const generatePage = (userName, githubName) => {
+    //return `
+    //Name: ${userName}
+    //GitHub: ${githubName}
+    //`;
+//};
 
-//console.log(generatePage('Kierra', 'knels11'));
+//const name = profileDataArgs[0];
+//const github = profileDataArgs[1];
 
-//code below returns undefined
-//es6 ft ~ assignment destructuring: assigns elements of an array to a variable in a single expression
-//const [name, github] = profileDataArgs;
 
-//console.log(generatePage(name,github));
+
+
