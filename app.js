@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const inquirer = require('inquirer');
 //const fs = require('fs');
 //const generatePage = require('./src/page-template');
@@ -8,18 +7,47 @@ return inquirer.prompt([
     {
         type: 'input', 
         name: 'name',
-        message: 'What is your name?'
+        message: 'What is your name? (Required)',
+        validate: nameInput => {
+            if (nameInput) {
+                return true;
+            } else {
+                console.log('Please enter your name!');
+                return false;
+            }
+        }
     },
     {
         type: 'input',
         name: 'github',
-        message: 'Enter your GitHub Username'
+        message: 'Enter your GitHub Username',
+        validate: nameInput => {
+            if (nameInput) {
+                return true;
+            } else {
+                console.log('Please enter your GitHub username!');
+                return false;
+            }
+        }
+    },
+    {
+        type:'confirm',
+        name: 'confirmAbout',
+        message: 'Would you like to enter some information about yourself for an "About" section?',
+        default: true
     },
     {
         type: 'input', 
         name: 'about',
-        message: 'Provide some information about yourself:'
-    }
+        message: 'Provide some information about yourself:',
+        when: ({ confirmAbout}) => {
+            if (confirmAbout) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
 ]);
 };
 //if there's no projects array property, create one
@@ -34,7 +62,15 @@ const promptProject = portfolioData => {
         {
             type: 'input',
             name: 'description',
-            message: 'Provide a description of the project (Required)'
+            message: 'Provide a description of the project (Required)',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a description for your project!');
+                    return false;
+                }
+            }
         },
         {
             type: 'checkbox', 
@@ -98,43 +134,3 @@ promptUser()
     //profileDataArr.forEach(profileItem => console.log(profileItem));
 //};
 //printProfileData(profileDataArgs);
-=======
-//template literals
-//const generatePage = (userName, githubName) => `Name: ${userName}, Github: ${githubName}`;
-const fs = require('fs');
-//receive exported functions- the object in module.exports assignment will be reassigned to generatePage variable
-const generatePage = require('./src/page-template.js');
-
-//profile data args array- holds the user command line args
-const profileDataArgs = process.argv.slice(2);
-//es6 ft ~ assignment destructuring: assigns elements of an array to a variable in a single expression
-const [name, github] = profileDataArgs;
-
-
-fs.writeFile('./index.html', generatePage(name, github), err => {
-    //in the callback function block, a conditional statement checks for the err being returned
-    if (err) throw new Error(err);
-    //success statement that directs users to inspect the newly created file
-    console.log('Portfolio complete! Check out index.html to see the output!');
-});
-
-
-//logs name and github inputs and confirm they match
-//console.log(name,github);
-//console.log(generatePage(name, github));
-
-//multi line strings
-//const generatePage = (userName, githubName) => {
-    //return `
-    //Name: ${userName}
-    //GitHub: ${githubName}
-    //`;
-//};
-
-//const name = profileDataArgs[0];
-//const github = profileDataArgs[1];
-
-
-
-
->>>>>>> 6c73c53651b83170676013e4d78e79a3784d7a90
