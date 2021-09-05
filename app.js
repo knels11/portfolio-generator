@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
-//const fs = require('fs');
-//const generatePage = require('./src/page-template');
+const fs = require('fs');
+const generatePage = require('./src/page-template');
 
 const promptUser = () => {
 return inquirer.prompt([
@@ -107,8 +107,53 @@ promptProject()
 promptUser()
 .then(promptProject)
 .then(portfolioData => {
-    console.log(portfolioData);
+//expression that invokes the generatePage() with portfolioData and
+//uses the result from our inquirer prompts as an arg called portfolioData
+    const pageHTML = generatePage();
+    fs.writeFile('./index.html', pageHTML, err => {
+        if (err) throw new Error(err);
+    });
+    console.log('Page created! Check out index.html in this directory to see it!');
 });
+
+const generateProjects = projectsArr => {
+    return `
+    <section class="my-3" id="portfolio">
+    <h2 class="text-dark bg-primary p-2 display-inline-block"> Work </h2>
+    <div class="flex-row justify-space-between">
+    ${projectsArr
+    .filter(({ feature }) => feature)
+    .map(({ name, description, languages, link }) => {
+        return `
+        <div class="col-12 mb-2 bg-dark text-light p-3">
+        <h3 class="portfolio-item-title text-light"> ${name} </h3>
+        <h5 class="portfolio-languages">
+        Built With:
+        ${languages.join(', ')}
+        </h5>
+        <p>${description}</p>
+        <a href="${link}" class="btn"><i class="fab fa-github mr-2"></i> View Project on GitHub </a>
+        </div>
+        `;
+    })
+    .join('')}
+
+    ${projectsArr
+    .filter(({ feature }) => !feature)
+    .map(({ name, description, languages, link }) => {
+        return `
+        <div class="col-12 col-md-6 mb-2 bg-dark text-light p-3 flex-column">
+        <h3 class="portfolio-item-title text-light"> ${name} </h3>
+        <h5 class="portfolio-languages">
+        Built With:
+        ${languages.join('')}
+        </div>
+        </section>
+        `;
+    })
+}
+`
+};
 
 
 //const pageHTML = generatePage(name, github); 0
